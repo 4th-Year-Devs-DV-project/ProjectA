@@ -27,6 +27,7 @@
 #include <cadmium/real_time/arm_mbed/io/digitalInput.hpp>
 #include <cadmium/real_time/arm_mbed/io/digitalOutput.hpp>
 
+#include "../atomics/receiver.hpp"
 #include "../atomics/blinky.hpp"
 
 #ifdef RT_ARM_MBED
@@ -84,32 +85,32 @@ int main(int argc, char ** argv) {
 
   /********************************************/
   /***************** blinky *******************/
-  /********************************************/
 
-  AtomicModelPtr blinky1 = cadmium::dynamic::translate::make_dynamic_atomic_model<Blinky, TIME>("blinky1");
+  //AtomicModelPtr blinky1 = cadmium::dynamic::translate::make_dynamic_atomic_model<Blinky, TIME>("blinky1");
 
   /********************************************/
   /********** DigitalInput1 *******************/
   /********************************************/
-  AtomicModelPtr digitalInput1 = cadmium::dynamic::translate::make_dynamic_atomic_model<DigitalInput, TIME>("digitalInput1", BUTTON1);
+ 
 
   /********************************************/
   /********* DigitalOutput1 *******************/
   /********************************************/
   AtomicModelPtr digitalOutput1 = cadmium::dynamic::translate::make_dynamic_atomic_model<DigitalOutput, TIME>("digitalOutput1", LED1);
 
+  AtomicModelPtr RX = cadmium::dynamic::translate::make_dynamic_atomic_model<receiver, TIME>("RX", D11, D12, D13, D15,D14,D9);
 
   /************************/
   /*******TOP MODEL********/
   /************************/
   cadmium::dynamic::modeling::Ports iports_TOP = {};
   cadmium::dynamic::modeling::Ports oports_TOP = {};
-  cadmium::dynamic::modeling::Models submodels_TOP =  {blinky1, digitalOutput1, digitalInput1};
+  cadmium::dynamic::modeling::Models submodels_TOP =  {RX, digitalOutput1};
   cadmium::dynamic::modeling::EICs eics_TOP = {};
   cadmium::dynamic::modeling::EOCs eocs_TOP = {};
   cadmium::dynamic::modeling::ICs ics_TOP = {
-    cadmium::dynamic::translate::make_IC<blinky_defs::dataOut, digitalOutput_defs::in>("blinky1","digitalOutput1"),
-    cadmium::dynamic::translate::make_IC<digitalInput_defs::out, blinky_defs::in>("digitalInput1", "blinky1")
+    cadmium::dynamic::translate::make_IC<receiver_defs::dataOut, digitalOutput_defs::in>("RX","digitalOutput1"),
+   // cadmium::dynamic::translate::make_IC<transmitter_defs::dataOut, blinky_defs::in>("TX", "blinky1")
   };
   CoupledModelPtr TOP = std::make_shared<cadmium::dynamic::modeling::coupled<TIME>>(
     "TOP",
