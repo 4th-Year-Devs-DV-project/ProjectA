@@ -94,7 +94,7 @@ using namespace std;
 
   {
 
-    char *s;
+    char s[32] = " ";
 
     nRF24L01P* temp;
 
@@ -116,22 +116,20 @@ using namespace std;
 
   void internal_transition() {
 
+	state.temp->powerUp(); // power up antenna
 	printf( "nRF24L01+ Frequency    : %d MHz\r\n",  state.temp->getRfFrequency() );
         printf( "nRF24L01+ Output power : %d dBm\r\n",  state.temp->getRfOutputPower() );
         printf( "nRF24L01+ Data Rate    : %d kbps\r\n", state.temp->getAirDataRate() );
-        printf( "nRF24L01+ RX Address   : 0x%010llX\r\n", state.temp->getRxAddress() );
+        printf( "nRF24L01+ TX Address   : 0x%010llX\r\n", state.temp->getTxAddress() );
 
 	
 
-	state.temp->powerUp(); // power up antenna 
+	
 	state.temp->setReceiveMode();
-	state.temp->enable(); // enable to ce pin
-	
-	
-	state.temp->read(NRF24L01P_PIPE_P0, state.s, 8); // getting hello world
+	state.temp->enable(); // enable ce pin
+	state.temp->read(NRF24L01P_PIPE_P0, state.s,32); // reading hello world  
 	printf("%i \n",sizeof(state.s));
-	printf( "reciving data:%s \n",state.s);
-	
+	printf( "reciving data :%s \n",state.s);
 	
 
   }

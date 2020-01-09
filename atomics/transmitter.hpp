@@ -94,7 +94,7 @@ using namespace std;
 
   {
 
-    char s[32] =  {"HELLO WORLD"};
+    char s[32] =  "THIS IS FIRST TEST";
 
     nRF24L01P* temp;
 
@@ -125,10 +125,10 @@ using namespace std;
 	
 
 	
-
+	state.temp->setTransmitMode();
 	state.temp->enable(); // enable ce pin
 
-	state.temp->write(NRF24L01P_PIPE_P0, state.s,8); // writing hello world  
+	state.temp->write(NRF24L01P_PIPE_P0, state.s,32); // writing hello world  
 	printf("%i \n",sizeof(state.s));
 	printf( "Sending data:%s \n",state.s);
 
