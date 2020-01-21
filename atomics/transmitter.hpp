@@ -91,7 +91,7 @@ using namespace std;
 
 
 
-	//state.temp->powerUp(); // power up antenna
+	state.temp->powerUp(); // power up antenna
 
 	printf( "nRF24L01+ Frequency    : %d MHz\r\n",  state.temp->getRfFrequency() );
         printf( "nRF24L01+ Output power : %d dBm\r\n",  state.temp->getRfOutputPower() );
