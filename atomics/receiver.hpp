@@ -130,7 +130,7 @@ using namespace std;
 	state.temp->read(NRF24L01P_PIPE_P0, state.s,32); // reading hello world  
 	printf("%i \n",sizeof(state.s));
 	printf( "reciving data :%s \n",state.s);
-	state.temp->disable();
+	//state.temp->disable();
 	
 
   }
