@@ -122,14 +122,15 @@ using namespace std;
         printf( "nRF24L01+ Data Rate    : %d kbps\r\n", state.temp->getAirDataRate() );
         printf( "nRF24L01+ TX Address   : 0x%010llX\r\n", state.temp->getTxAddress() );
 
-	
-
-	
+	state.temp->setTransferSize(32);
+	  
+	  
 	state.temp->setReceiveMode();
 	state.temp->enable(); // enable ce pin
 	state.temp->read(NRF24L01P_PIPE_P0, state.s,32); // reading hello world  
 	printf("%i \n",sizeof(state.s));
 	printf( "reciving data :%s \n",state.s);
+	state.temp->disable();
 	
 
   }
